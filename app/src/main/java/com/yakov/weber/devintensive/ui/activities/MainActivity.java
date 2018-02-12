@@ -1,7 +1,9 @@
-package com.yakov.weber.devintensive;
+package com.yakov.weber.devintensive.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.yakov.weber.devintensive.R;
 
 public class MainActivity extends AppCompatActivity {
 

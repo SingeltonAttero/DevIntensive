@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_larger_72"
+    android:orientation="horizontal"
+    android:background="@color/dark_grey"
+    >
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:text="@string/rating_number"
+            android:gravity="center|bottom"
+            style="@style/header_text_view"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:text="@string/rating_text"
+            android:gravity="center|top"
+            style="@style/header_text_view.bottom"
+            />
+    </LinearLayout>
+    <View style="@style/sep_header_view" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.50"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:text="@string/count_code"
+            android:gravity="center|bottom"
+            style="@style/header_text_view" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:text="@string/code_text"
+            android:gravity="center|top"
+            style="@style/header_text_view.bottom"
+
+            />
+
+    </LinearLayout>
+
+    <View
+    style="@style/sep_header_view"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:text="@string/count_projects"
+            android:gravity="center|bottom"
+            style="@style/header_text_view"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:text="@string/projects_text"
+            android:gravity="center|top"
+            style="@style/header_text_view.bottom"
+
+            />
+
+    </LinearLayout>
+</LinearLayout>

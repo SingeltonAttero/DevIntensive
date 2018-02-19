@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Dev Intensive</string>
+    <string name="description_prof">Профессиональные навыки: опытный пользователь ПК(Linux, Windows),
+        Знание ООП, MySQL(на уровне запросов),Английский(на уровне чтения тех. литературы),сборка
+        проектов(Maven, Gradle). Я начинающий Java-разработчик, Имеется несколько небольших проектов по типу
+        (чат, игра пятнашки(Swing), небольшой сервер и др.). Другие навыки: высокая организованность, целеустремленность,
+        высокая работоспособность, стрессоустойчивость, способность к быстрому обучению.</string>
+    <string name="hint_phone_edit_text">Мобильный телефон</string>
+    <string name="text_description_phone">89210071385</string>
+    <string name="email_edit_text_hint">Email</string>
+    <string name="body_email_edit_text">askont@mail.ru</string>
+    <string name="vk_hint_edit_text">Профиль в VK</string>
+    <string name="vk_body_edit_text">Weber Yakov</string>
+    <string name="hint_git_hub_edit_text">Репозиторий</string>
+    <string name="git_hub_body_edit_text">github.com/askont/rep</string>
+    <string name="hint_about_me">О Себе</string>
+    <string name="rating_number">5</string>
+    <string name="rating_text">рейтинг</string>
+    <string name="count_code">2500</string>
+    <string name="code_text">написано строк кода</string>
+    <string name="count_projects">5</string>
+    <string name="projects_text">проектов</string>
 </resources>

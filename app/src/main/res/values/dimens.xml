@@ -16,5 +16,7 @@
     <dimen name="spacing_medium_32">32dp</dimen>
     <dimen name="spacing_large_56">56dp</dimen>
     <dimen name="spacing_larger_72">74dp</dimen>
+    <dimen name="size_big">72dp</dimen>
+    <dimen name="line_size_2">2dp</dimen>
 
 </resources>

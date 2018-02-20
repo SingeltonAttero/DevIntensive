@@ -15,6 +15,7 @@
 
         <ImageView
             style="@style/image.left"
+            android:id="@+id/image_mobile_phone_left"
             android:src="@drawable/ic_phone_left" />
 
         <LinearLayout

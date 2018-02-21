@@ -37,7 +37,7 @@
     <style name="view_sep">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/line_size_2</item>
-        <item name="android:background">@color/red_dark</item>
+        <item name="android:background">@color/dark_text</item>
         <item name="android:layout_marginStart">@dimen/size_large_72</item>
     </style>
 

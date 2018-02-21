@@ -22,4 +22,9 @@
     <string name="projects_text">проектов</string>
     <string name="menu_profile_text">Мой профиль</string>
     <string name="team_menu_text">Команда</string>
+    <string name="text_mode_edit">режим редактирования</string>
+    <string name="text_mode_view">режим просмотра</string>
+    <string name="menu_text_about_me">О нас</string>
+    <string name="menu_text_option">Настройки</string>
+    <string name="menu_text_profile">Профиль</string>
 </resources>

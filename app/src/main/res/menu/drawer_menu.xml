@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/user_profile_menu"
-           android:checked="true"
+        <item
+            android:id="@+id/user_profile_menu"
+            android:checked="true"
             android:icon="@drawable/person_menu_icon"
-            android:title="@string/menu_profile_text"
+            android:title="@string/menu_profile_text" />
+        <item
+            android:id="@+id/team_profile_menu"
+            android:icon="@drawable/group_menu"
+            android:title="@string/team_menu_text" />
+    </group>
+
+    <group
+        android:checkableBehavior="all"
+        android:menuCategory="container">
+        <item
+            android:id="@+id/profile"
+            android:title="@string/menu_text_profile"
+            android:icon="@drawable/menu_profile_item"
             />
-        <item android:id="@+id/team_profile_menu"
-            android:icon="@drawable/ic_group_menu"
-            android:title="@string/team_menu_text"
+        <item
+            android:id="@+id/option"
+            android:title="@string/menu_text_option"
+            android:icon="@drawable/option_menu_item_ic"
             />
+        <item
+            android:id="@+id/about_me"
+            android:title="@string/menu_text_about_me"
+            android:icon="@drawable/item_menu_about_me"
+            />
+
     </group>
 
 </menu>

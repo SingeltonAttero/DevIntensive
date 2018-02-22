@@ -11,12 +11,13 @@
     android:background="@drawable/background_fon_header"
     >
 
-    <ImageView
+    <com.yakov.weber.devintensive.utils.CircularImageView
         android:id="@+id/image_view_header_photo"
         android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/size_image_profile_photo"
         android:layout_marginBottom="16dp"
-        android:background="@color/color_accent"
+        android:src="@drawable/menu_profile_item"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         />

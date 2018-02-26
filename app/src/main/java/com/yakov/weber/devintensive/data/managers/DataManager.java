@@ -1,9 +1,5 @@
 package com.yakov.weber.devintensive.data.managers;
 
-/**
- * Created by yakov on 20.02.18.
- */
-
 public class DataManager {
 
     private static DataManager sDataManager = null;

@@ -8,10 +8,6 @@ import com.yakov.weber.devintensive.utils.DevIntensiveApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yakov on 20.02.18.
- */
-
 public class DevPreferencesManager {
 
     private SharedPreferences mPreferences;

@@ -22,6 +22,7 @@
     <dimen name="font_text_normal">12sp</dimen>
     <dimen name="profile_size_image">256dp</dimen>
     <dimen name="size_image_profile">156dp</dimen>
-    <dimen name="size_image_profile_photo">60dp</dimen>
+    <dimen name="size_image_profile_photo">64dp</dimen>
+
 
 </resources>

@@ -9,17 +9,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * Created by jannyjacky on 2/22/18.
- */
 
-@SuppressLint("AppCompatCustomView")
-public class CircularImageView extends ImageView{
-
+public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
     private int borderWidth = 5;
     private int viewWidth ;
     private int viewHeight;
@@ -28,18 +22,18 @@ public class CircularImageView extends ImageView{
     private Paint paintBorder;
     private BitmapShader shader;
 
-    public CircularImageView(Context context) {
+    public CircleImageView(Context context) {
         super(context);
         init();
     }
 
-    public CircularImageView(Context context,  AttributeSet attrs) {
+    public CircleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
 
     }
 
-    public CircularImageView(Context context,  AttributeSet attrs, int defStyleAttr) {
+    public CircleImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -90,7 +84,7 @@ public class CircularImageView extends ImageView{
 
 
             canvas.drawCircle(circleCenter + borderWidth, circleCenter + borderWidth
-            ,circleCenter + borderWidth,paintBorder);
+                    ,circleCenter + borderWidth,paintBorder);
 
             canvas.drawCircle(circleCenter + borderWidth
                     , circleCenter + borderWidth,circleCenter,paintBorder);
@@ -137,22 +131,3 @@ public class CircularImageView extends ImageView{
         return result;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

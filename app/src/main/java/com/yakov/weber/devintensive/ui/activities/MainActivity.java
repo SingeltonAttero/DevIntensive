@@ -1,6 +1,6 @@
 package com.yakov.weber.devintensive.ui.activities;
 
-import android.preference.PreferenceManager;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import com.yakov.weber.devintensive.R;
 import com.yakov.weber.devintensive.data.managers.DataManager;
 import com.yakov.weber.devintensive.utils.ConstantManager;
-import com.yakov.weber.devintensive.utils.DevIntensiveApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             R.id.git_hub_2_edit_text, R.id.git_hub_3_edit_text})
     List<EditText> mUserInfoViews;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +66,12 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
 
         } else {
-            mCurrentEditMode = savedInstanceState.getInt(ConstantManager.MODE_EDIT_KEY,0);
+            mCurrentEditMode = savedInstanceState.getInt(ConstantManager.MODE_EDIT_KEY, 0);
             changeEditMode(mCurrentEditMode);
         }
         setupToolBar();
         setupDrawer();
         loadUserInfoValue();
-
 
 
         Log.d(TAG, "onCreate: ");
@@ -137,21 +137,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     /**
      * load user info
      */
     private void loadUserInfoValue() {
-       List<String > userData=  mDataManager.getDevPreferencesManager().loadUserProfileData();
-        for (int i = 0; i < userData.size() ; i++) {
+        List<String> userData = mDataManager.getDevPreferencesManager().loadUserProfileData();
+        for (int i = 0; i < userData.size(); i++) {
             mUserInfoViews.get(i).setText(userData.get(i));
         }
 
     }
+
     /**
      * save user info
      */
     private void saveUserInfoValue() {
-    List<String > userData = new ArrayList<>();
+        List<String> userData = new ArrayList<>();
         for (EditText userFieldViews : mUserInfoViews) {
             userData.add(userFieldViews.getText().toString());
         }
@@ -173,12 +175,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    /** load file from gallery*/
+    private void loadPhotoFromGallery(){
+
+    }
+    /** create file from camera*/
+    private void loadPhotoFromCamera(){
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(ConstantManager.MODE_EDIT_KEY, mCurrentEditMode);
     }
+    /**
+     * on back, close drawer
+     */
+    @Override
+    public void onBackPressed() {
+        if (this.mDrawerLayoutContainer.isDrawerOpen(GravityCompat.START)){
+            this.mDrawerLayoutContainer.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+
+
 
     @Override
     protected void onStart() {

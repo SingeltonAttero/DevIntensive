@@ -35,7 +35,7 @@ public class DevPreferencesManager {
         dataList.add(mPreferences.getString(ConstantManager.USER_EMAIL_KEY,"askont@mail.ru"));
         dataList.add(mPreferences.getString(ConstantManager.USER_VK_KEY,"vk.com"));
         dataList.add(mPreferences.getString(ConstantManager.USER_ABOUT_KEY,"Yakov Weber android dev"));
-        dataList.add(mPreferences.getString(ConstantManager.USER_GIT_1_KEY,"github.com"));
+        dataList.add(mPreferences.getString(ConstantManager.USER_GIT_1_KEY,"github.com/askont/DevIntensive"));
         dataList.add(mPreferences.getString(ConstantManager.USER_GIT_2_KEY,"github.com"));
         dataList.add(mPreferences.getString(ConstantManager.USER_GIT_3_KEY,"github.com"));
         return dataList;

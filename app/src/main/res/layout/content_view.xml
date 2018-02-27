@@ -46,6 +46,7 @@
 
         <ImageView
             style="@style/image.right"
+            android:id="@+id/phone_image_call_right"
             android:src="@drawable/phone_right" />
 
 
@@ -88,6 +89,7 @@
 
         <ImageView
             style="@style/image.right"
+            android:id="@+id/email_send_image_right"
             android:src="@drawable/send_email_right" />
 
 
@@ -102,7 +104,9 @@
 
         <ImageView
             style="@style/image.left"
-            android:src="@drawable/material_vk" />
+            android:src="@drawable/material_vk"
+
+            />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -128,7 +132,9 @@
 
         <ImageView
             style="@style/image.right"
-            android:src="@drawable/visibility_right" />
+            android:src="@drawable/visibility_right"
+            android:id="@+id/vk_profile_image_right"
+            />
     </LinearLayout>
 
     <View style="@style/view_sep" />
@@ -167,7 +173,9 @@
 
         <ImageView
             style="@style/image.right"
-            android:src="@drawable/visibility_right" />
+            android:src="@drawable/visibility_right"
+            android:id="@+id/git_hub_rep_image_right"
+            />
 
     </LinearLayout>
 
@@ -207,6 +215,7 @@
 
         <ImageView
             style="@style/image.right"
+            android:id="@+id/git_hub_2_rep_image_right"
             android:src="@drawable/visibility_right" />
 
     </LinearLayout>
@@ -246,6 +255,7 @@
 
         <ImageView
             style="@style/image.right"
+            android:id="@+id/git_hub_3_rep_image_right"
             android:src="@drawable/visibility_right" />
 
     </LinearLayout>

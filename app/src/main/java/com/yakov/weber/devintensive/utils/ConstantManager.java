@@ -13,4 +13,10 @@ public class ConstantManager {
     public static final String USER_GIT_3_KEY = "USER_GIT_3_KEY";
     public static final String USER_ABOUT_KEY = "USER_ABOUT_KEY";
     public static final String USER_VK_KEY = "USER_VK_KEY";
+    public static final String USER_SAVE_PHOTO_KEY = "SAVE_USER_PHOTO_KEY";
+    public static final int LOAD_PROFILE_PHOTO_DIALOG = 1;
+    public static final int REQUEST_CAMERA_PICTURE = 22;
+    public static final int REQUEST_GALLERY_PICTURE = 23;
+    public static final int REQUEST_SETTING_APP = 24;
+    public static final int REQUEST_PERMISSION_CAMERA_STORAGE = 25;
 }

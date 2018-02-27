@@ -28,17 +28,59 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/collapsing_toolbar_layout"
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/dark_grey"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <ImageView
-                    android:id="@+id/user_photo_main"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/profile_size_image"
-                    android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/deni_profile" />
+                    android:layout_height="@dimen/header_big_size_172">
+
+                    <ImageView
+                        android:id="@+id/user_photo_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/header_big_size_172"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/deni_profile" />
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey"
+                        android:id="@+id/profile_placeholder"
+                        android:visibility="gone"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/photo_add_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/user_profile_placeholder_image"
+                            android:textColor="@color/white_def"
+                            app:layout_constraintBottom_toTopOf="@+id/add_icon_image_view"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textSize="@dimen/small_font_size"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/add_icon_image_view"
+                            android:layout_width="@dimen/placeholder_image_size_90"
+                            android:layout_height="@dimen/placeholder_image_size_90"
+                            android:layout_marginBottom="@dimen/size_small_24"
+                            android:layout_marginEnd="@dimen/spacing_normal_16"
+                            android:src="@drawable/add_a_photo_placeholder"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.547"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+                </FrameLayout>
+
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -60,16 +102,16 @@
         </android.support.v4.widget.NestedScrollView>
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/fab_right_space"
-            app:layout_anchor="@+id/app_bar_layout"
-            app:layout_anchorGravity="right|bottom"
             android:src="@drawable/fab_create_edit"
-            android:id="@+id/fab"
-            />
+            app:layout_anchor="@+id/app_bar_layout"
+            app:layout_anchorGravity="right|bottom" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

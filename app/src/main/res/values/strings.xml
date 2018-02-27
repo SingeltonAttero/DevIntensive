@@ -27,4 +27,13 @@
     <string name="menu_text_about_me">О нас</string>
     <string name="menu_text_option">Настройки</string>
     <string name="menu_text_profile">Профиль</string>
+    <string name="user_profile_placeholder_image">сменить фото</string>
+    <string name="user_profile_dialog_gallery">загрузить из галереи</string>
+    <string name="user_profile_dialog_camera">сделать снимок</string>
+    <string name="user_profile_cancel_dialog">отмена</string>
+    <string name="change_title_dialog">изменить фотографию</string>
+    <string name="chooser_text_title">выберите фото</string>
+    <string name="permission_accept_text">нужно разрешения на камеру</string>
+    <string name="snackbar_button_action_text">настройки</string>
+    <string name="error_text_sneckbar">недоступно</string>
 </resources>

@@ -23,6 +23,9 @@
     <dimen name="profile_size_image">256dp</dimen>
     <dimen name="size_image_profile">156dp</dimen>
     <dimen name="size_image_profile_photo">64dp</dimen>
+    <dimen name="placeholder_image_size_90">90dp</dimen>
+    <dimen name="small_font_size">16sp</dimen>
+    <dimen name="header_big_size_172">172dp</dimen>
 
 
 </resources>

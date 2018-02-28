@@ -6,7 +6,7 @@
         (чат, игра пятнашки(Swing), небольшой сервер и др.). Другие навыки: высокая организованность, целеустремленность,
         высокая работоспособность, стрессоустойчивость, способность к быстрому обучению.</string>
     <string name="hint_phone_edit_text">Мобильный телефон</string>
-    <string name="text_description_phone">89210071385</string>
+    <string name="text_description_phone">+7 (921) 007–13–85</string>
     <string name="email_edit_text_hint">Email</string>
     <string name="body_email_edit_text">askont@mail.ru</string>
     <string name="vk_hint_edit_text">Профиль в VK</string>
@@ -36,4 +36,6 @@
     <string name="permission_accept_text">нужно разрешения на камеру</string>
     <string name="snackbar_button_action_text">настройки</string>
     <string name="error_text_sneckbar">недоступно</string>
+    <string name="https_text">https://</string>
+    <string name="title_chooset_email">Выберите почтовый клиент</string>
 </resources>

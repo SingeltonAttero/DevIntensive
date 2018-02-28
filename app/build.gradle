@@ -36,4 +36,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // mask validate
+    compile "ru.tinkoff.decoro:decoro:1.1.1"
 }

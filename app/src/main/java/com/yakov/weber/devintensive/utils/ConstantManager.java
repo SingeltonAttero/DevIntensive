@@ -19,4 +19,5 @@ public class ConstantManager {
     public static final int REQUEST_GALLERY_PICTURE = 23;
     public static final int REQUEST_SETTING_APP = 24;
     public static final int REQUEST_PERMISSION_CAMERA_STORAGE = 25;
+    public static final String INIT_CHECK_PREF = "INIT_CHECK_PREF";
 }

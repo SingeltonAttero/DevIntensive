@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -27,16 +29,25 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yakov.weber.devintensive.R;
 import com.yakov.weber.devintensive.data.managers.DataManager;
 import com.yakov.weber.devintensive.utils.ConstantManager;
+import com.yakov.weber.devintensive.utils.DevIntensiveApplication;
+import com.yakov.weber.devintensive.utils.TextWatherValidField;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +60,14 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ru.tinkoff.decoro.MaskImpl;
+import ru.tinkoff.decoro.parser.PhoneNumberUnderscoreSlotsParser;
+import ru.tinkoff.decoro.parser.SlotsParser;
+import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser;
+import ru.tinkoff.decoro.slots.PredefinedSlots;
+import ru.tinkoff.decoro.slots.Slot;
+import ru.tinkoff.decoro.watchers.FormatWatcher;
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -74,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     @BindViews({R.id.mobile_phone_edit_text,
             R.id.email_edit_text, R.id.vk_edit_text
-            ,R.id.about_me_edit_text, R.id.git_hub_edit_text,
+            , R.id.about_me_edit_text, R.id.git_hub_edit_text,
             R.id.git_hub_2_edit_text, R.id.git_hub_3_edit_text})
     List<EditText> mUserInfoViews;
     @BindView(R.id.profile_placeholder)
@@ -85,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
     AppBarLayout mAppBarLayout;
     @BindView(R.id.user_photo_main)
     ImageView mImageViewPhoto;
+    @BindView(R.id.text_input_layout_phone)
+    TextInputLayout mTextInputLayoutPhone;
+    @BindView(R.id.header_view_count_code)
+    LinearLayout mLinearLayoutHeader;
 
 
     @Override
@@ -101,11 +124,10 @@ public class MainActivity extends AppCompatActivity {
         }
         setupToolBar();
         setupDrawer();
+        initEditTextMask();
         loadUserInfoValue();
         insertProfilePhoto(mDataManager.getDevPreferencesManager().loadUserPhotoUri());
 
-
-        Log.d(TAG, "onCreate: ");
     }
 
     private void setupToolBar() {
@@ -124,24 +146,23 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayoutContainer.openDrawer(GravityCompat.START);
+                hideInputMethod(mUserInfoViews.get(0));
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.image_mobile_phone_left)
-    public void clickImage(View view) {
-        showMessage("привет мир");
-    }
 
     @OnClick(R.id.app_bar_layout)
     public void clickAppBar(View view) {
-        switch (view.getId()) {
-            case R.id.app_bar_layout:
-                showDialog(ConstantManager.LOAD_PROFILE_PHOTO_DIALOG);
-                break;
-
+        if (mCurrentEditMode == 1) {
+            switch (view.getId()) {
+                case R.id.app_bar_layout:
+                    showDialog(ConstantManager.LOAD_PROFILE_PHOTO_DIALOG);
+                    break;
+            }
         }
+
     }
 
     @OnClick(R.id.fab)
@@ -150,43 +171,48 @@ public class MainActivity extends AppCompatActivity {
         if (mCurrentEditMode == 0) {
             changeEditMode(1);
             mCurrentEditMode = 1;
-            showMessage(getString(R.string.text_mode_edit));
+            mTextInputLayoutPhone.setFocusable(true);
+            showInputMethod(mUserInfoViews.get(0));
+            mLinearLayoutHeader.setVisibility(View.GONE);
             fab.setImageResource(R.drawable.fab_view_mode_done);
         } else {
+            mTextInputLayoutPhone.setFocusable(false);
+            mLinearLayoutHeader.setVisibility(View.VISIBLE);
             changeEditMode(0);
             mCurrentEditMode = 0;
-            showMessage(getString(R.string.text_mode_view));
             fab.setImageResource(R.drawable.fab_create_edit);
+
         }
         saveUserInfoValue();
-
     }
 
     @OnClick(R.id.phone_image_call_right)
     public void clickPhoneCall(View view) {
+        setAnimationView(view);
         Intent takeCallIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mUserInfoViews.get(0).getText()));
         checkResolveStartActivity(takeCallIntent);
     }
 
     @OnClick(R.id.email_send_image_right)
-    public void clickEmailSend(View view){
+    public void clickEmailSend(View view) {
+        setAnimationView(view);
         Intent takeEmailIntent = new Intent(Intent.ACTION_SENDTO);
         takeEmailIntent.setData(Uri.parse("mailto:" + mUserInfoViews.get(1).getText()));
-        checkResolveStartActivity(Intent.createChooser(takeEmailIntent,"Выберите почтовый клиент"));
+        checkResolveStartActivity(Intent.createChooser(takeEmailIntent, getString(R.string.title_chooset_email)));
 
     }
 
     @OnClick(R.id.vk_profile_image_right)
-    public void clickProfileVK(View view){
-        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://"+mUserInfoViews.get(2).getText()));
-
+    public void clickProfileVK(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.https_text) + mUserInfoViews.get(2).getText()));
+        setAnimationView(view);
         checkResolveStartActivity(intent);
     }
 
-    @OnClick({R.id.git_hub_rep_image_right,R.id.git_hub_2_rep_image_right,R.id.git_hub_3_rep_image_right})
-    public void clickGithubRep(View view){
+    @OnClick({R.id.git_hub_rep_image_right, R.id.git_hub_2_rep_image_right, R.id.git_hub_3_rep_image_right})
+    public void clickGithubRep(View view) {
         String gitRep = null;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.git_hub_rep_image_right:
                 gitRep = String.valueOf(mUserInfoViews.get(4).getText());
                 break;
@@ -197,16 +223,77 @@ public class MainActivity extends AppCompatActivity {
                 gitRep = String.valueOf(mUserInfoViews.get(6).getText());
                 break;
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://" + gitRep));
+        setAnimationView(view);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.https_text) + gitRep));
         checkResolveStartActivity(intent);
     }
-    /** проверка на даступность обработке
+
+
+    private void initEditTextMask() {
+        setMaskPhone(mUserInfoViews.get(0));
+        validFieldEmail(mUserInfoViews.get(1));
+
+    }
+
+    private void validFieldEmail(EditText view){
+        view.addTextChangedListener(new TextWatherValidField(view,"Error"));
+    }
+
+    /**
+     * mask номера телефона
+     */
+    public void setMaskPhone(EditText view) {
+        Slot[] parser = new PhoneNumberUnderscoreSlotsParser().parseSlots("+7(9__)-___-__-__");
+        FormatWatcher watcher = new MaskFormatWatcher(MaskImpl.createNonTerminated(parser));
+        watcher.installOn(view);
+    }
+
+
+    /**
+     * показать клавиатуру
+     *
+     * @param view элемент фокуса
+     */
+    private void showInputMethod(EditText view) {
+        InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (manager != null) {
+            view.setSelection(view.getText().length());
+            manager.showSoftInput(view, 0);
+        }
+    }
+
+    /**
+     * прячем клавиатуру
+     *
+     * @param view элемент фокуса
+     */
+    private void hideInputMethod(EditText view) {
+        InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (manager != null) {
+
+            manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * Анимация кнопок
+     *
+     * @param view любой наследник класса View
+     */
+    private void setAnimationView(View view) {
+        Animation jumpAnim = AnimationUtils.loadAnimation(this, R.anim.animation_image_view);
+        view.startAnimation(jumpAnim);
+    }
+
+    /**
+     * проверка на даступность
+     *
      * @param intent проверка и передача в startActivity
-     * */
+     */
     private void checkResolveStartActivity(Intent intent) {
-        if (intent.resolveActivity(getPackageManager())!= null){
+        if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
-        }else {
+        } else {
             showMessage(getString(R.string.error_text_sneckbar));
         }
     }
@@ -219,34 +306,45 @@ public class MainActivity extends AppCompatActivity {
     private void changeEditMode(int mode) {
         for (EditText infoValue : mUserInfoViews) {
             if (mode == 1) {
-                infoValue.setEnabled(true);
-                infoValue.setFocusable(true);
-                infoValue.setFocusableInTouchMode(true);
-                showProfilePlaceHolder();
-                lockToolbar();
-                mCollapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+                changeEditText(infoValue, true);
             } else {
-                infoValue.setEnabled(false);
-                infoValue.setFocusable(false);
-                infoValue.setFocusableInTouchMode(false);
-                mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
-                unlockToolbar();
-                hideProfilePlaceHolder();
-                saveUserInfoValue();
+                changeEditText(infoValue, false);
 
             }
         }
+        if (mode == 1) {
+            showProfilePlaceHolder();
+            lockToolbar();
+            mCollapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+            mToolbar.setTitle(R.string.change_title_dialog);
+        } else {
+            unlockToolbar();
+            hideProfilePlaceHolder();
+            saveUserInfoValue();
+            mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+        }
+    }
+
+    /**
+     * блокировка view; enable, focus and selection
+     */
+    private void changeEditText(EditText infoValue, boolean enabled) {
+        infoValue.setEnabled(enabled);
+        infoValue.setFocusable(enabled);
+        infoValue.setFocusableInTouchMode(enabled);
+        infoValue.setSelection(infoValue.getText().length());
     }
 
     /**
      * load user info
      */
     private void loadUserInfoValue() {
-        List<String> userData = mDataManager.getDevPreferencesManager().loadUserProfileData();
-        for (int i = 0; i < userData.size(); i++) {
-            mUserInfoViews.get(i).setText(userData.get(i));
+        if (DevIntensiveApplication.getSharedPreferences().contains(ConstantManager.INIT_CHECK_PREF)) {
+            List<String> userData = mDataManager.getDevPreferencesManager().loadUserProfileData();
+            for (int i = 0; i < userData.size(); i++) {
+                mUserInfoViews.get(i).setText(userData.get(i));
+            }
         }
-
     }
 
     /**
@@ -339,8 +437,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void lockToolbar() {
-        mAppBarLayout.setExpanded(true, true);
-        mAppBarLayoutParams.setScrollFlags(0);
+        mAppBarLayout.setExpanded(false, true);
+        // mAppBarLayoutParams.setScrollFlags(0);
         mCollapsingToolbarLayout.setLayoutParams(mAppBarLayoutParams);
     }
 
@@ -363,7 +461,10 @@ public class MainActivity extends AppCompatActivity {
 
         return image;
     }
-    /** загрузка основной фото*/
+
+    /**
+     * вставка в ImageView основной фото
+     */
     private void insertProfilePhoto(Uri selectImage) {
         Picasso.with(this)
                 .load(selectImage)
@@ -380,15 +481,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == ConstantManager.REQUEST_PERMISSION_CAMERA_STORAGE && grantResults.length == 2){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == ConstantManager.REQUEST_PERMISSION_CAMERA_STORAGE && grantResults.length == 2) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // TODO: 27.02.18 логика для обработки разрешений   Manifest.permission.CAMERA
-            }else {
+            } else {
                 // TODO: 27.02.18 логика для обработки разрешений нажата отмена Manifest.permission.CAMERA
             }
-            if (grantResults[1] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 // TODO: 27.02.18 логика для обработки разрешений  Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }else {
+            } else {
                 // TODO: 27.02.18 логика для обработки разрешений нажата отмена Manifest.permission.WRITE_EXTERNAL_STORAGE
             }
         }
